@@ -181,3 +181,24 @@ def identify_sensitivity_zones(data):
 
     return analysis
 sensitivity_results = identify_sensitivity_zones(df)
+
+
+
+def production_latency_analysis(df):
+    
+    result = df.groupby(
+        'Latency_Range',
+        observed=False
+    ).agg(
+        Avg_Latency=('Network_Latency_ms', 'mean'),
+        Avg_Production_Speed=('Production_Speed_units_per_hr', 'mean'),
+        Total_Records=('Machine_ID', 'count')
+    ).round(2)
+
+    print("\nPRODUCTION SPEED VS LATENCY")
+    print(result)
+
+    return result
+
+production_results = production_latency_analysis(df)
+print(production_results)
